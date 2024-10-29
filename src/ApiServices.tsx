@@ -1,9 +1,14 @@
 const API_BASE_URL = "http://localhost:5090"; // Deine API-Base-URL
+const API_KEY = "AMSecretKey16"; // API-Schlüssel
 
 // GET: Holt alle ToDos
 export const fetchTodos = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/ToDo`);
+    const response = await fetch(`${API_BASE_URL}/ToDo`, {
+      headers: {
+        "X-Api-Key": API_KEY,
+      },
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -17,7 +22,11 @@ export const fetchTodos = async () => {
 // GET: Holt ein ToDo nach ID
 export const fetchTodoById = async (id: number) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/ToDo/${id}`);
+    const response = await fetch(`${API_BASE_URL}/ToDo`, {
+      headers: {
+        "X-Api-Key": API_KEY,
+      },
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -35,6 +44,7 @@ export const createTodo = async (todo: { task: string, isCompleted: boolean }) =
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-Api-Key": API_KEY,
       },
       body: JSON.stringify(todo),
     });
@@ -55,6 +65,7 @@ export const updateTodo = async (id: number, updatedTodo: any) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        "X-Api-Key": API_KEY,
       },
       body: JSON.stringify(updatedTodo),
     });
@@ -76,6 +87,9 @@ export const deleteTodo = async (id: number) => {
   try {
     const response = await fetch(`${API_BASE_URL}/ToDo/${id}`, {
       method: "DELETE",
+      headers: {
+        "X-Api-Key": API_KEY,
+      }
     });
 
     if (!response.ok) {
